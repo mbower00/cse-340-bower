@@ -77,6 +77,47 @@ Util.buildClassificationGrid = async function (data) {
   return grid;
 };
 
+// inv_id
+// inv_make
+// inv_model
+// inv_year
+// inv_description
+// inv_image
+// inv_thumbnail
+// inv_price
+// inv_miles
+// inv_color
+
+Util.buildVehicleGrid = async function (data) {
+  let grid = `
+    <div class="vehicle-detail-grid">
+      <section>
+        <img src="${data.inv_image}" alt="Image of ${data.inv_make} ${
+    data.inv_model
+  } on CSE Motors">
+      </section>
+      <section>
+        <h2>${data.inv_year} ${data.inv_make} ${data.inv_model}</h2>
+        <div class="vehicle-detail-info-container">
+          <div class="vehicle-detail-alt-info">
+            <strong>Price: $${new Intl.NumberFormat("en-US").format(
+              data.inv_price
+            )}</strong>
+          </div>
+          <div><strong>Description:</strong> ${data.inv_description}</div>
+          <div class="vehicle-detail-alt-info"><strong>Color:</strong> ${
+            data.inv_color
+          }</div>
+          <div><strong>Miles:</strong> ${new Intl.NumberFormat("en-US").format(
+            data.inv_miles
+          )}</div>
+        </div>
+      </section>
+    </div>
+  `;
+  return grid;
+};
+
 /**
  * Middleware For Handling Errors
  * Wrap other function in this for
