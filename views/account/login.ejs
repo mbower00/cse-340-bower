@@ -5,10 +5,33 @@
 <div class="account-container">
   <form class="account-form">
     <label for="account_email">Email:</label>
-    <input id="account_email" name="account_email" type="email" />
+    <input required id="account_email" name="account_email" type="email" />
+
     <label for="account_password">Password:</label>
-    <input id="account_password" name="account_password" type="password" />
+    <div class="password-input-container">
+      <input
+        required
+        id="account_password"
+        name="account_password"
+        type="password"
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-z0-9])(?!.*\s).{12,}$"
+      />
+      <div id="password-btn">show</div>
+    </div>
+
+    <div class="password-requirements">
+      Must contain at least:
+      <ul>
+        <li>12 total characters</li>
+        <li>1 capital letter</li>
+        <li>1 number</li>
+        <li>1 special character</li>
+      </ul>
+    </div>
+
     <button type="submit">LOGIN</button>
   </form>
   <p>No account? <a href="/account/registration">Sign-up</a></p>
 </div>
+
+<script src="/js/hide-show-password.js"></script>
