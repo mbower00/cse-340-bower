@@ -6,16 +6,19 @@
  * Require Statements
  *************************/
 const express = require("express");
-const expressLayouts = require("express-ejs-layouts");
-const env = require("dotenv").config();
 const app = express();
+const expressLayouts = require("express-ejs-layouts");
+const session = require("express-session");
+const pool = require("./database/");
+const env = require("dotenv").config();
+// Route
 const static = require("./routes/static");
 const inventoryRoute = require("./routes/inventoryRoute");
 const triggerErrorRoute = require("./routes/triggerErrorRoute.js");
+const accountRoute = require("./routes/accountRoute.js");
 const utilities = require("./utilities/index");
+// Controller
 const baseController = require("./controllers/baseController.js");
-const session = require("express-session");
-const pool = require("./database/");
 
 /**
  * Middleware
@@ -54,6 +57,8 @@ app.use(static);
 app.get("/", utilities.handleErrors(baseController.buildHome));
 // Inventory routes
 app.use("/inv", inventoryRoute);
+// Account route
+app.use("/account", accountRoute);
 // Trigger error route
 app.use("/triggererror", triggerErrorRoute);
 // File Not Found Route - must be last route in list
