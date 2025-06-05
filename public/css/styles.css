@@ -206,7 +206,7 @@ h3 {
   border-radius: 8px;
 }
 
-.login-container {
+.account-container {
   width: 100%;
   max-width: 300px;
   margin: 0 auto;
@@ -215,22 +215,23 @@ h3 {
   padding: 20px;
   color: var(--white-text-color);
 }
-.login-form {
+.account-form {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 7px;
 }
-.login-form label {
+.account-form label {
   font-weight: bold;
 }
-.login-form input {
+.account-form input {
   padding: 5px;
   font-size: large;
   border-radius: 8px;
   border: none;
+  width: 100%;
 }
-.login-form button {
+.account-form button {
   width: fit-content;
   align-self: center;
   padding: 5px 20px;
@@ -241,12 +242,37 @@ h3 {
   color: dimgray;
   cursor: pointer;
 }
-.login-container p {
+.account-container p {
   text-align: center;
   margin: 15px 0 0 0;
 }
-.login-container a {
+.account-container a {
   color: var(--white-text-color);
+}
+.password-requirements {
+  font-size: x-small;
+}
+.password-requirements ul {
+  margin: 5px 0 0 0;
+  padding: 0 0 0 20px;
+}
+.required {
+  font-size: x-small;
+  align-self: end;
+}
+.password-input-container {
+  position: relative;
+}
+#password-btn {
+  position: absolute;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: x-small;
+  top: 4px;
+  right: 2px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 3px;
 }
 
 .notice {

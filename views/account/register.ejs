@@ -1,0 +1,49 @@
+<h1><%= title %></h1>
+
+<%- messages() %>
+
+<div class="account-container">
+  <form class="account-form">
+    <label for="account_firstname">First Name*</label>
+    <input
+      required
+      id="account_firstname"
+      name="account_firstname"
+      type="text"
+    />
+
+    <label for="account_lastname">Last Name*</label>
+    <input required id="account_lastname" name="account_lastname" type="text" />
+
+    <label for="account_email">Email*</label>
+    <input required id="account_email" name="account_email" type="email" />
+
+    <label for="account_password">Password*</label>
+    <div class="password-input-container">
+      <input
+        required
+        id="account_password"
+        name="account_password"
+        type="password"
+      />
+
+      <div id="password-btn">show</div>
+    </div>
+
+    <div class="password-requirements">
+      Must contain at least:
+      <ul>
+        <li>12 total characters</li>
+        <li>1 capital letter</li>
+        <li>1 number</li>
+        <li>1 special character</li>
+      </ul>
+    </div>
+
+    <div class="required">*Required</div>
+
+    <button type="submit">REGISTER</button>
+  </form>
+</div>
+
+<script src="/js/hide-show-password.js"></script>
