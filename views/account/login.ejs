@@ -1,11 +1,23 @@
 <h1><%= title %></h1>
 
-<%- messages() %>
+<%- messages() %> <% if (errors) { %>
+<ul class="error">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
 
 <div class="account-container">
-  <form class="account-form">
+  <form action="/account/login" method="post" class="account-form">
     <label for="account_email">Email:</label>
-    <input required id="account_email" name="account_email" type="email" />
+    <input
+      required
+      id="account_email"
+      name="account_email"
+      type="email"
+      value="<%= locals.account_email %>"
+    />
 
     <label for="account_password">Password:</label>
     <div class="password-input-container">
