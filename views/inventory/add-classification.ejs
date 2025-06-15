@@ -1,0 +1,41 @@
+<h1><%= title %></h1>
+
+<%- messages() %> <% if (errors) { %>
+<ul class="error">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
+
+<div class="form-container">
+  <form action="/inv/add/classification" method="post" class="cse-motors-form">
+    <label for="classification_name">Classification Name*</label>
+
+    <!-- 
+        code below comes from
+            - https://regexr.com/ 
+            - VSC autocomplete/suggestions
+            - other course code
+    -->
+    <input
+      name="classification_name"
+      id="classification_name"
+      type="text"
+      required
+      pattern="[QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890]+"
+    />
+
+    <div class="form-requirements">
+      Cannot contain any:
+      <ul>
+        <li>Special character(s)</li>
+        <li>Space(s)</li>
+      </ul>
+    </div>
+
+    <div class="required">*Required</div>
+
+    <button type="submit">ADD</button>
+  </form>
+</div>

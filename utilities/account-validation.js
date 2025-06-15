@@ -13,7 +13,7 @@ validate.registrationRules = () => {
       .trim()
       .escape()
       .notEmpty()
-      .isLength()
+      .isLength({ min: 1 })
       .withMessage("Please provide a first name."), // on error this message is sent.
 
     // lastname is required and must be a string

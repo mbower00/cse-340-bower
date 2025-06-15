@@ -8,9 +8,9 @@
 </ul>
 <% } %>
 
-<div class="account-container">
-  <form action="/account/login" method="post" class="account-form">
-    <label for="account_email">Email:</label>
+<div class="form-container">
+  <form action="/account/login" method="post" class="cse-motors-form">
+    <label for="account_email">Email*</label>
     <input
       required
       id="account_email"
@@ -19,7 +19,7 @@
       value="<%= locals.account_email %>"
     />
 
-    <label for="account_password">Password:</label>
+    <label for="account_password">Password*</label>
     <div class="password-input-container">
       <input
         required
@@ -31,7 +31,7 @@
       <div id="password-btn">show</div>
     </div>
 
-    <div class="password-requirements">
+    <div class="form-requirements">
       Must contain at least:
       <ul>
         <li>12 total characters</li>
@@ -40,6 +40,8 @@
         <li>1 special character</li>
       </ul>
     </div>
+
+    <div class="required">*Required</div>
 
     <button type="submit">LOGIN</button>
   </form>

@@ -38,6 +38,7 @@ h3 {
 #top-header {
   margin-top: 5px;
   display: flex;
+  align-items: center;
 }
 #top-header a {
   text-decoration: none;
@@ -46,23 +47,73 @@ h3 {
 .site-name {
   font-size: xx-large;
 }
-#tools {
+
+.hamburger {
+  width: 25px;
+  height: 25px;
+  position: relative;
+  display: flex;
+  align-items: center;
   margin-left: auto;
-  font-variant: small-caps;
-  font-size: small;
+  cursor: pointer;
 }
-#tools a:hover {
-  text-decoration: underline;
+.hamburger .part {
+  width: 25px;
+  height: 4px;
+  background-color: var(--primary-color);
+  position: absolute;
+  transition: all ease 0.2s;
+}
+.hamburger .top {
+  top: 0px;
+}
+.hamburger .bottom {
+  bottom: 0px;
+}
+.hamburger.opened .top {
+  transform: translateY(11px) rotate(45deg);
+}
+.hamburger.opened .middle {
+  transform: rotate(-45deg);
+}
+.hamburger.opened .bottom {
+  transform: translateY(-10px) rotate(45deg);
+}
+.hamburger .nav-container {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  display: none;
+  z-index: 5;
+}
+.hamburger.opened .nav-container {
+  display: block;
+  cursor: default;
 }
 
 #top-navigation {
   background-color: var(--secondary-color);
+  padding: 15px;
+  border-radius: 8px 8px 8px 8px;
+  box-shadow: rgba(0, 0, 0, 0.6) 2px 2px 6px;
+  height: min-content;
 }
 #top-navigation ul {
   list-style: none;
   padding: 0;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  gap: 5px;
+  margin: 0;
+}
+#top-navigation .home-li {
+  border-bottom: var(--primary-color) solid 2px;
+  padding-bottom: 6px;
+}
+#top-navigation .account-li {
+  border-top: var(--primary-color) solid 2px;
+  margin-top: 3px;
+  padding-top: 3px;
 }
 #top-navigation a {
   color: var(--white-text-color);
@@ -206,7 +257,7 @@ h3 {
   border-radius: 8px;
 }
 
-.account-container {
+.form-container {
   width: 100%;
   max-width: 300px;
   margin: 0 auto;
@@ -215,30 +266,38 @@ h3 {
   padding: 20px;
   color: var(--white-text-color);
 }
-.account-form {
+.cse-motors-form {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 7px;
 }
-.account-form label {
+.cse-motors-form label {
   font-weight: bold;
 }
-.account-form input {
+.cse-motors-form input,
+.cse-motors-form select,
+.cse-motors-form textarea {
   padding: 5px;
   font-size: large;
   border-radius: 8px;
   border: none;
   width: 100%;
+  /* code copied and pasted from https://fonts.google.com/selection/embed */
+  font-family: "Open Sans", sans-serif;
 }
 
-input:focus:invalid {
+input:focus:invalid,
+select:focus:invalid,
+textarea:focus:invalid {
   background-color: #fee;
 }
-input:focus:required:valid {
+input:focus:required:valid,
+select:focus:required:valid,
+textarea:focus:required:valid {
   background-color: #efe;
 }
-.account-form button {
+.cse-motors-form button {
   width: fit-content;
   align-self: center;
   padding: 5px 20px;
@@ -249,17 +308,17 @@ input:focus:required:valid {
   color: dimgray;
   cursor: pointer;
 }
-.account-container p {
+.form-container p {
   text-align: center;
   margin: 15px 0 0 0;
 }
-.account-container a {
+.form-container a {
   color: var(--white-text-color);
 }
-.password-requirements {
+.form-requirements {
   font-size: x-small;
 }
-.password-requirements ul {
+.form-requirements ul {
   margin: 5px 0 0 0;
   padding: 0 0 0 20px;
 }
@@ -280,6 +339,22 @@ input:focus:required:valid {
   background-color: rgba(0, 0, 0, 0);
   border-radius: 8px;
   padding: 3px;
+}
+
+.managment-options {
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  margin: 0 auto;
+}
+.managment-options a {
+  text-decoration: none;
+  color: white;
+  background-color: var(--secondary-color);
+  padding: 10px;
+  border-radius: 8px;
 }
 
 .notice {
@@ -316,14 +391,6 @@ input:focus:required:valid {
   .site-name {
     font-size: x-large;
   }
-
-  #top-navigation {
-    font-size: smaller;
-  }
-  #top-navigation li {
-    padding: 7px;
-  }
-
   #welcome-heading {
     font-size: x-large;
   }
@@ -363,5 +430,10 @@ input:focus:required:valid {
 
   .vehicle-detail-grid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .managment-options {
+    flex-direction: row;
+    gap: 30px;
   }
 }
