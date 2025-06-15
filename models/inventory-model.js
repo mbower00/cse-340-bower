@@ -43,6 +43,9 @@ async function getVehicleById(vehicleId) {
   }
 }
 
+/**
+ * Inserts a new classification into the database
+ */
 async function createClassification(classification_name) {
   try {
     const sql = `
@@ -58,6 +61,9 @@ async function createClassification(classification_name) {
   }
 }
 
+/**
+ * inserts a new inventory item into the database
+ */
 async function addToInventory(
   inv_make,
   inv_model,
