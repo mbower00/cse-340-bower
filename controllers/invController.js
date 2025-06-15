@@ -75,6 +75,9 @@ invCont.buildAddInventoryItem = async function (req, res, next) {
   });
 };
 
+/**
+ * Post a new inventory item
+ */
 invCont.postNewInventoryItem = async function (req, res, next) {
   const nav = await utilities.getNav();
   const {
