@@ -33,9 +33,12 @@ validate.registrationRules = () => {
       .normalizeEmail() // refer to validation.js docs
       .withMessage("a valid email is required.")
       .custom(async (account_email) => {
-        const emailExists = await accountModel.checkExistingEmail(
-          account_email
-        );
+        let emailExists;
+        // try {
+        emailExists = await accountModel.checkExistingEmail(account_email);
+        // } catch (error) {
+        //   throw new Error("There was an error. Please try again later.");
+        // }
         if (emailExists) {
           throw new Error("Email exists. Please log in or use different email");
         }
