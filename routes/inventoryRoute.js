@@ -25,6 +25,12 @@ router.post(
 // Route to get the add inventory item view
 router.get("/add", utilities.handleErrors(invController.buildAddInventoryItem));
 
+// Route get the inventory items as JSON according to the classification_id
+router.get(
+  "/getInventory/:classification_id",
+  utilities.handleErrors(invController.getInventoryJSON)
+);
+
 // Route to post new inventory item
 router.post(
   "/add",

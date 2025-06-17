@@ -356,6 +356,18 @@ textarea:focus:required:valid {
   padding: 10px;
   border-radius: 8px;
 }
+#managment-selection-container {
+  max-width: 350px;
+}
+#inventoryDisplay {
+  text-align: left;
+}
+#inventoryDisplay td {
+  padding: 5px;
+}
+#inventoryDisplay th {
+  padding: 12px 5px 5px 5px;
+}
 
 .notice {
   border-left: 2px solid var(--primary-color);
