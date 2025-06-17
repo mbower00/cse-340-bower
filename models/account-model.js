@@ -11,7 +11,7 @@ async function registerAccount(
 ) {
   try {
     const sql =
-      "INSERT INTO acdcount (account_firstname, account_lastname, account_email, account_password, account_type) VALUES ($1, $2, $3, $4, 'Client') RETURNING *";
+      "INSERT INTO account (account_firstname, account_lastname, account_email, account_password, account_type) VALUES ($1, $2, $3, $4, 'Client') RETURNING *";
     return await pool.query(sql, [
       account_firstname,
       account_lastname,
@@ -36,4 +36,19 @@ async function checkExistingEmail(account_email) {
   }
 }
 
-module.exports = { registerAccount, checkExistingEmail };
+/**
+ * Return account data using email address
+ */
+async function getAccountByEmail(account_email) {
+  try {
+    const result = await pool.query(
+      "SELECT account_id, account_firstname, account_lastname, account_email, account_password FROM account WHERE account_email = $1",
+      [account_email]
+    );
+    return result.rows[0];
+  } catch (error) {
+    return new Error("No matching email found");
+  }
+}
+
+module.exports = { registerAccount, checkExistingEmail, getAccountByEmail };

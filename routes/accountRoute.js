@@ -4,6 +4,10 @@ const accountController = require("../controllers/accountController");
 const utilities = require("../utilities");
 const accountValidate = require("../utilities/account-validation");
 
+// get the account route
+router.get("/", utilities.handleErrors(accountController.buildAccount));
+
+// get the login view
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
 
 // get the registration view
@@ -25,9 +29,7 @@ router.post(
   "/login",
   accountValidate.loginRules(),
   accountValidate.checkLoginData,
-  (req, res) => {
-    res.status(200).send("login process");
-  }
+  utilities.handleErrors(accountController.accountLogin)
 );
 
 module.exports = router;
