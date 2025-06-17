@@ -58,6 +58,7 @@ async function createClassification(classification_name) {
     return await pool.query(sql, [classification_name]);
   } catch (error) {
     console.error("createClassification error ", error);
+    return false;
   }
 }
 
@@ -110,7 +111,8 @@ async function addToInventory(
       inv_color,
     ]);
   } catch (error) {
-    console.error("createClassification error ", error);
+    console.error("addToInventory error ", error);
+    return false;
   }
 }
 
@@ -123,7 +125,8 @@ async function checkExistingClassificationId(classification_id) {
     const email = await pool.query(sql, [classification_id]);
     return email.rowCount;
   } catch (error) {
-    console.error("createClassification error ", error);
+    console.error("checkExistingClassificationId error ", error);
+    throw new Error("There was an error. Please try again later.");
   }
 }
 
@@ -136,7 +139,8 @@ async function checkExistingClassificationName(classification_name) {
     const email = await pool.query(sql, [classification_name]);
     return email.rowCount;
   } catch (error) {
-    console.error("createClassification error ", error);
+    console.error("checkExistingClassificationName error ", error);
+    throw new Error("There was an error. Please try again later.");
   }
 }
 

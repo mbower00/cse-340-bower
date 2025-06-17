@@ -77,7 +77,6 @@ async function registerAccount(req, res) {
   );
 
   if (regResult) {
-    console.log(regResult);
     req.flash(
       "notice",
       `Congratulations, you\'re registered, ${account_firstname}. Please log in.`

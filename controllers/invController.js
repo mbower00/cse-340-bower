@@ -53,7 +53,7 @@ invCont.postNewClassification = async function (req, res, next) {
 
     req.flash("error", "Sorry, the classification creation failed.");
 
-    res.status(501).render(".inventory/add-classification", {
+    res.status(501).render("./inventory/add-classification", {
       title: "Add Classification",
       nav,
       errors: null,
@@ -123,7 +123,7 @@ invCont.postNewInventoryItem = async function (req, res, next) {
 
     req.flash("error", "Sorry, the inventory addition failed.");
 
-    res.status(501).render(".inventory/add-inventory", {
+    res.status(501).render("./inventory/add-inventory", {
       title: "Add to Inventory",
       nav,
       errors: null,
