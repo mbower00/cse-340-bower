@@ -147,6 +147,7 @@ async function accountLogin(req, res) {
 }
 
 module.exports = {
+  buildAccount,
   buildLogin,
   buildRegistration,
   registerAccount,
