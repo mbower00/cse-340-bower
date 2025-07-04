@@ -137,6 +137,10 @@ async function checkClassificationData(req, res, next) {
   }
 }
 
+/**
+ * Validate inventory item data for posting
+ * Errors will be directed to the add-inventory view
+ */
 async function checkInventoryData(req, res, next) {
   const {
     inv_make,
@@ -178,9 +182,58 @@ async function checkInventoryData(req, res, next) {
   }
 }
 
+/**
+ * Validate inventory item data for updating (include inv_id in body)
+ * Errors will be directed to the edit-inventory view
+ */
+async function checkUpdateData(req, res, next) {
+  const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    classification_id,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+  } = req.body;
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav();
+    const name = `${inv_make} ${inv_model}`;
+    const classificationList = await utilities.buildClassificationList(
+      classification_id
+    );
+    res.render("./inventory/edit-inventory", {
+      errors,
+      title: "Edit " + name,
+      nav,
+      classificationList,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      classification_id,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+    });
+  } else {
+    next();
+  }
+}
+
 module.exports = {
   classificationRules,
   checkClassificationData,
   inventoryRules,
   checkInventoryData,
+  checkUpdateData,
 };

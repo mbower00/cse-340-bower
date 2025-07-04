@@ -17,3 +17,6 @@ node_modules
 
 # The read me info for the application
 README.md
+
+# using code from https://prettier.io/docs/ignore.html
+.prettierignore

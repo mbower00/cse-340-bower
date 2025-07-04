@@ -1,0 +1,130 @@
+<!-- 
+    code below comes from
+        - https://regexr.com/ 
+        - VSC autocomplete/suggestions
+        - other course code
+-->
+
+<h1><%= title %></h1>
+
+<%- messages() %> <% if (errors) { %>
+<ul class="error">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
+
+<div class="form-container">
+  <form id="updateForm" action="/inv/update" method="post" class="cse-motors-form">
+    <!-- MAKE -->
+    <label for="inv_make">Make*</label>
+    <input
+      name="inv_make"
+      id="inv_make"
+      type="text"
+      required
+      placeholder="Min of 3 characters"
+      pattern=".{3,}"
+      value="<%= locals.inv_make %>"
+    />
+
+    <!-- MODEL -->
+    <label for="inv_model">Model*</label>
+    <input
+      name="inv_model"
+      id="inv_model"
+      type="text"
+      required
+      placeholder="Min of 3 characters"
+      pattern=".{3,}"
+      value="<%= locals.inv_model %>"
+    />
+
+    <!-- YEAR -->
+    <label for="inv_year">Year*</label>
+    <input
+      name="inv_year"
+      id="inv_year"
+      type="text"
+      required
+      placeholder="4-digit year"
+      pattern="[0-9]{4}"
+      value="<%= locals.inv_year %>"
+    />
+
+    <!-- CLASSIFICATION -->
+    <label for="classification_id">Classification*</label>
+    <%- classificationList %>
+
+    <!-- DESCRIPTION -->
+    <!-- using code from https://www.w3schools.com/html/html_form_elements.asp -->
+    <label for="inv_description">Description*</label>
+    <textarea name="inv_description" id="inv_description" required rows="4">
+<%- locals.inv_description %></textarea
+    >
+
+    <!-- IMAGE -->
+    <label for="inv_image">Image Path*</label>
+    <input
+      name="inv_image"
+      id="inv_image"
+      type="text"
+      required
+      value="<%= locals.inv_image || '/images/vehicles/no-image.png' %>"
+    />
+
+    <!-- THUMBNAIL -->
+    <label for="inv_thumbnail">Thumbnail Path*</label>
+    <input
+      name="inv_thumbnail"
+      id="inv_thumbnail"
+      type="text"
+      required
+      value="<%= locals.inv_thumbnail || '/images/vehicles/no-image.png' %>"
+    />
+
+    <!-- PRICE -->
+    <label for="inv_price">Price*</label>
+    <input
+      name="inv_price"
+      id="inv_price"
+      type="text"
+      required
+      placeholder="Decimal (up to .00) or integer"
+      pattern="[0-9]+|[0-9]+\.[0-9]{1,2}"
+      value="<%= locals.inv_price %>"
+    />
+
+    <!-- MILES -->
+    <label for="inv_miles">Miles*</label>
+    <input
+      name="inv_miles"
+      id="inv_miles"
+      type="text"
+      required
+      placeholder="Digits only"
+      pattern="[0-9]+"
+      value="<%= locals.inv_miles %>"
+    />
+
+    <!-- COLOR -->
+    <label for="inv_color">Color*</label>
+    <input
+      name="inv_color"
+      id="inv_color"
+      type="text"
+      required
+      value="<%= locals.inv_color %>"
+    />
+
+    <div class="required">*Required</div>
+
+    <button type="submit" disabled>UPDATE</button>
+    <input type="hidden" name="inv_id" 
+    <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+    <% } %>>
+  </form>
+</div>
+
+<script src="/js/inv-update.js"></script>

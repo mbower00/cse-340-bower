@@ -27,6 +27,7 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
+// Gets a vehicle by it's id
 async function getVehicleById(vehicleId) {
   try {
     const data = await pool.query(
@@ -37,7 +38,7 @@ async function getVehicleById(vehicleId) {
       `,
       [vehicleId]
     );
-    return data.rows;
+    return data.rows[0];
   } catch (error) {
     console.error("getvehiclebyid error " + error);
   }
@@ -144,6 +145,58 @@ async function checkExistingClassificationName(classification_name) {
   }
 }
 
+/**
+ * Update Inventory Data
+ */
+async function updateInventory(
+  inv_id,
+  inv_make,
+  inv_model,
+  inv_year,
+  classification_id,
+  inv_description,
+  inv_image,
+  inv_thumbnail,
+  inv_price,
+  inv_miles,
+  inv_color
+) {
+  try {
+    const sql = `
+    UPDATE public.inventory SET 
+      inv_make = $1,
+      inv_model = $2,
+      inv_year = $3,
+      classification_id = $4,
+      inv_description = $5,
+      inv_image = $6,
+      inv_thumbnail = $7,
+      inv_price = $8,
+      inv_miles = $9,
+      inv_color = $10
+    WHERE inv_id = $11
+    RETURNING * 
+    `;
+    const data = await pool.query(sql, [
+      inv_make,
+      inv_model,
+      inv_year,
+      classification_id,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      inv_id,
+    ]);
+    return data.rows[0];
+  } catch (error) {
+    console.error("model updateInventory error ", error);
+    return false;
+  }
+}
+
 module.exports = {
   getClassifications,
   getInventoryByClassificationId,
@@ -152,4 +205,5 @@ module.exports = {
   addToInventory,
   checkExistingClassificationId,
   checkExistingClassificationName,
+  updateInventory,
 };
