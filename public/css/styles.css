@@ -322,6 +322,9 @@ textarea:focus:required:valid {
   margin: 5px 0 0 0;
   padding: 0 0 0 20px;
 }
+.cse-motors-form .confirm-text {
+  margin-top: 0;
+}
 .required {
   font-size: x-small;
   align-self: end;

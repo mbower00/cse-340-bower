@@ -1,0 +1,80 @@
+<!-- 
+    code below comes from
+        - https://regexr.com/ 
+        - VSC autocomplete/suggestions
+        - other course code
+-->
+
+<h1><%= title %></h1>
+
+<%- messages() %> <% if (errors) { %>
+<ul class="error">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
+
+<div class="form-container">
+  <form action="/inv/delete" method="post" class="cse-motors-form">
+      
+      <!-- MAKE -->
+      <label for="inv_make">Make</label>
+      <input
+      name="inv_make"
+      id="inv_make"
+      type="text"
+      required
+      readonly
+      placeholder="Min of 3 characters"
+      pattern=".{3,}"
+      value="<%= locals.inv_make %>"
+      />
+      
+      <!-- MODEL -->
+      <label for="inv_model">Model</label>
+      <input
+      name="inv_model"
+      id="inv_model"
+      type="text"
+      required
+      readonly
+      placeholder="Min of 3 characters"
+      pattern=".{3,}"
+      value="<%= locals.inv_model %>"
+      />
+      
+      <!-- YEAR -->
+      <label for="inv_year">Year</label>
+      <input
+      name="inv_year"
+      id="inv_year"
+      type="text"
+      required
+      readonly
+      placeholder="4-digit year"
+      pattern="[0-9]{4}"
+      value="<%= locals.inv_year %>"
+      />
+      
+    <!-- PRICE -->
+    <label for="inv_price">Price</label>
+    <input
+    name="inv_price"
+    id="inv_price"
+    type="text"
+    required
+    readonly
+    placeholder="Decimal (up to .00) or integer"
+    pattern="[0-9]+|[0-9]+\.[0-9]{1,2}"
+    value="<%= locals.inv_price %>"
+    />
+    
+    <p class="form-requirements confirm-text">Confirm Deletion - The delete is permanent.</p>
+    
+    <button type="submit">DELETE</button>
+    <input type="hidden" name="inv_id" 
+    <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+    <% } %>>
+</form>
+</div>
