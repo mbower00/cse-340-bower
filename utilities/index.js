@@ -9,8 +9,7 @@ const Util = {};
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications();
 
-  let list = "<ul>";
-  list += '<li class="home-li"><a href="/" title="Home page">Home</a></li>';
+  let list = '<li class="home-li"><a href="/" title="Home page">Home</a></li>';
   data.rows.forEach((row) => {
     list += "<li>";
     list +=
@@ -23,9 +22,6 @@ Util.getNav = async function (req, res, next) {
       "</a>";
     list += "</li>";
   });
-  list +=
-    '<li class="account-li"><a title="Click to log in" href="/account/login">Account</a><li>';
-  list += "</ul>";
   return list;
 };
 
@@ -45,7 +41,7 @@ Util.buildClassificationGrid = async function (data) {
         vehicle.inv_make +
         " " +
         vehicle.inv_model +
-        'details"><img src="' +
+        ' details"><img src="' +
         vehicle.inv_thumbnail +
         '" alt="Image of ' +
         vehicle.inv_make +

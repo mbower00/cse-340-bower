@@ -97,6 +97,7 @@ h3 {
   border-radius: 8px 8px 8px 8px;
   box-shadow: rgba(0, 0, 0, 0.6) 2px 2px 6px;
   height: min-content;
+  width: max-content;
 }
 #top-navigation ul {
   list-style: none;

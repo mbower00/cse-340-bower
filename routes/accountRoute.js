@@ -36,4 +36,7 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 );
 
+// logout and redirect to the home view
+router.get("/logout", utilities.handleErrors(accountController.accountLogout));
+
 module.exports = router;

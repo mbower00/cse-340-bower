@@ -2,11 +2,30 @@
   <span class="site-name">
     <a href="/" title="Return to home page">CSE Motors</a>
   </span>
+
   <div id="hamburger-header" class="hamburger">
     <div class="top part"></div>
     <div class="middle part"></div>
     <div class="bottom part"></div>
-    <div class="nav-container"><%- include('../partials/navigation') %></div>
+    <div class="nav-container">
+      <nav id="top-navigation">
+        <ul>
+          <%- nav %>
+          <% if (locals.loggedin) { %>
+            <li class="account-li">
+              <a title="View your account" href="/account"><%- locals.accountData.account_firstname %>'s Profile</a>
+            </li>
+            <li>
+              <a title="Click to log out" href="/account/logout">Logout</a>
+            </li>
+            <% } else { %>
+              <li class="account-li">
+                <a title="Click to log in" href="/account/login">My Account</a>
+              </li>
+          <% } %>
+        </ul>
+      </nav>
+    </div>
   </div>
 </header>
 

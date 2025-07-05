@@ -145,10 +145,22 @@ async function accountLogin(req, res) {
   }
 }
 
+function accountLogout(req, res) {
+  // process log out
+  res.clearCookie("jwt");
+  res.locals.loggedin = 0;
+  res.locals.accountData = null;
+
+  // redirect to Home
+  req.flash("notice", "Logged out successfully");
+  res.redirect("/");
+}
+
 module.exports = {
   buildAccount,
   buildLogin,
   buildRegistration,
   registerAccount,
   accountLogin,
+  accountLogout,
 };
