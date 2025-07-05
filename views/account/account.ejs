@@ -8,4 +8,12 @@
 </ul>
 <% } %>
 
-<p class="notice">You're logged in</p>
+<% if (locals.accountData?.account_type === "Client" || locals.accountData?.account_type === "Employee" || locals.accountData?.account_type === "Admin") { %>
+  <h2>Welcome <%- locals.accountData.account_firstname %></h2>
+<% } %>
+<p>You may <a href="/account/update/<%= locals.accountData.account_id %>">update your account information</a>.</p>
+<% if (locals.accountData?.account_type === "Employee" || locals.accountData?.account_type === "Admin") { %>
+  <h3>Inventory Management</h3>
+  <p>Access the <a href="/inv">inventory management system</a>.</p>
+<% } %>
+
