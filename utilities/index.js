@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const invModel = require("../models/inventory-model");
+const accountModel = require("../models/account-model");
 const Util = {};
 
 /**
@@ -169,6 +170,42 @@ Util.checkLogin = (req, res, next) => {
     req.flash("warning", "Please log in.");
     return res.redirect("/account/login");
   }
+};
+
+Util.createAccountClearanceMiddleware = (
+  allowedTypes = ["Employee", "Admin"]
+) => {
+  return (req, res, next) => {
+    let account_type = null;
+
+    if (req.cookies.jwt) {
+      jwt.verify(
+        req.cookies.jwt,
+        process.env.ACCESS_TOKEN_SECRET,
+        (error, accountData) => {
+          if (error) {
+            req.flash(
+              "warning",
+              "You are not authorized to reach that section of the site"
+            );
+            return res.redirect("/account/login");
+          }
+          account_type = accountData.account_type;
+        }
+      );
+
+      if (allowedTypes.includes(account_type)) {
+        next();
+        return;
+      }
+    }
+
+    req.flash(
+      "warning",
+      "You are not authorized to reach that section of the site"
+    );
+    return res.redirect("/account/login");
+  };
 };
 
 module.exports = Util;
