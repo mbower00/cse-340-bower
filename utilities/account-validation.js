@@ -160,11 +160,9 @@ validate.accountUpdateRules = () => {
       .withMessage("a valid email is required.")
       .custom(async (formEmail) => {
         const { account_email } = await accountModel.getAccountById(account_id);
-        console.log(formEmail, account_email, account_email !== formEmail);
         if (account_email !== formEmail) {
           let emailExists;
           emailExists = await accountModel.checkExistingEmail(formEmail);
-          console.log(emailExists);
           if (emailExists) {
             throw new Error(
               "Email exists on another account. Please choose another email or keep your current one."
