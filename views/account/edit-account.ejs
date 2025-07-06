@@ -1,0 +1,87 @@
+<!-- code for this file originally copied and pasted from ./register.ejs  -->
+
+<h1><%= title %></h1>
+
+<%- messages() %> <% if (errors) { %>
+<ul class="error">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
+
+<h2 class="centered-text">Account Update</h2>
+<div class="form-container">
+  <form action="/account/update" method="post" class="cse-motors-form">
+    <label for="account_firstname">First Name*</label>
+    <input
+      required
+      id="account_firstname"
+      name="account_firstname"
+      type="text"
+      value="<%= locals.account_firstname %>"
+    />
+
+    <label for="account_lastname">Last Name*</label>
+    <input
+      required
+      id="account_lastname"
+      name="account_lastname"
+      type="text"
+      value="<%= locals.account_lastname %>"
+    />
+
+    <label for="account_email">Email*</label>
+    <input
+      required
+      id="account_email"
+      name="account_email"
+      type="email"
+      value="<%= locals.account_email %>"
+    />
+
+    <div class="required">*Required</div>
+
+    <button type="submit">UPDATE</button>
+    <input type="hidden" name="account_id"
+    <% if(locals.account_id) { %> value="<%= locals.account_id %>"
+    <% } %>>
+  </form>
+</div>
+
+<h2 class="centered-text">Change Password</h2>
+<div class="form-container">
+  <form action="/account/update/password" method="post" class="cse-motors-form">
+    <label for="account_password">Password*</label>
+    <div class="password-input-container">
+      <input
+        required
+        id="account_password"
+        name="account_password"
+        type="password"
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-z0-9])(?!.*\s).{12,}$"
+      />
+
+      <div id="password-btn">show</div>
+    </div>
+
+    <div class="form-requirements">
+      Entering a password will change your current password. Your password must have at least:
+      <ul>
+        <li>12 total characters</li>
+        <li>1 capital letter</li>
+        <li>1 number</li>
+        <li>1 special character</li>
+      </ul>
+    </div>
+
+    <div class="required">*Required</div>
+
+    <button type="submit">CHANGE</button>
+    <input type="hidden" name="account_id"
+    <% if(locals.account_id) { %> value="<%= locals.account_id %>"
+    <% } %>>
+  </form>
+</div>
+
+<script src="/js/hide-show-password.js"></script>

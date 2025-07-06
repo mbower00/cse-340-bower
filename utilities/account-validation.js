@@ -121,4 +121,102 @@ validate.checkLoginData = async (req, res, next) => {
   }
   next();
 };
+
+/**
+ * Rules for account update
+ */
+validate.accountUpdateRules = () => {
+  let account_id;
+  return [
+    // firstname is required and must be string
+    body("account_firstname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .withMessage("Please provide a first name."), // on error this message is sent.
+
+    // lastname is required and must be a string
+    body("account_lastname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 2 })
+      .withMessage("Please provide a last name."), // on error this message is sent.
+
+    // no check for account_id, just store it for use below
+    body("account_id").custom((id) => {
+      account_id = id;
+      return true;
+    }),
+
+    // valid email is required and cannot already exist in the DB (unless it is unchanged)
+    body("account_email")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isEmail()
+      .normalizeEmail() // refer to validation.js docs
+      .withMessage("a valid email is required.")
+      .custom(async (formEmail) => {
+        const { account_email } = await accountModel.getAccountById(account_id);
+        console.log(formEmail, account_email, account_email !== formEmail);
+        if (account_email !== formEmail) {
+          let emailExists;
+          emailExists = await accountModel.checkExistingEmail(formEmail);
+          console.log(emailExists);
+          if (emailExists) {
+            throw new Error(
+              "Email exists on another account. Please choose another email or keep your current one."
+            );
+          }
+        }
+      }),
+  ];
+};
+
+/**
+ * Check on account update data (used for both general and password update)
+ */
+validate.checkAccountUpdateData = async (req, res, next) => {
+  const { account_id, account_firstname, account_lastname, account_email } =
+    req.body;
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    res.render("account/edit-account", {
+      errors,
+      title: `Edit ${account_firstname}'s Account`,
+      nav,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
+    });
+    return;
+  }
+  next();
+};
+
+/**
+ * Rules for password update
+ */
+validate.passwordUpdateRules = () => {
+  return [
+    // password is required and mush be strong password
+    body("account_password")
+      .trim()
+      .notEmpty()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("Password does not meet requirements."),
+  ];
+};
+
 module.exports = validate;

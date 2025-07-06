@@ -373,6 +373,10 @@ textarea:focus:required:valid {
   padding: 12px 5px 5px 5px;
 }
 
+.centered-text {
+  text-align: center;
+}
+
 .notice {
   border-left: 2px solid var(--primary-color);
   padding-left: 10px;
