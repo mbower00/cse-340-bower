@@ -19,6 +19,7 @@ const static = require("./routes/static");
 const inventoryRoute = require("./routes/inventoryRoute");
 const triggerErrorRoute = require("./routes/triggerErrorRoute.js");
 const accountRoute = require("./routes/accountRoute.js");
+const reviewRoute = require("./routes/reviewRoute.js");
 // Controller
 const baseController = require("./controllers/baseController.js");
 
@@ -66,6 +67,8 @@ app.get("/", utilities.handleErrors(baseController.buildHome));
 app.use("/inv", inventoryRoute);
 // Account route
 app.use("/account", accountRoute);
+// Review route
+app.use("/review", reviewRoute);
 // Trigger error route
 app.use("/triggererror", triggerErrorRoute);
 // File Not Found Route - must be last route in list

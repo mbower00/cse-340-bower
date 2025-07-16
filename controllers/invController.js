@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model");
+const reviewModel = require("../models/review-model");
 const utilities = require("../utilities");
 
 const invCont = {};
@@ -156,9 +157,14 @@ invCont.buildByClassificationId = async function (req, res, next) {
   });
 };
 
+/**
+ * Return inventory detail view
+ */
 invCont.buildVehicleDetail = async function (req, res, next) {
   const vehicleId = req.params.vehicleId;
   const data = await invModel.getVehicleById(vehicleId);
+  const reviews = await reviewModel.getReviewsByInventoryId(vehicleId);
+  const reviewList = utilities.buildReviewList(reviews);
   const grid = await utilities.buildVehicleGrid(data);
   let nav = await utilities.getNav();
   const vehicleName = `${data.inv_make} ${data.inv_model}`;
@@ -166,6 +172,8 @@ invCont.buildVehicleDetail = async function (req, res, next) {
     title: vehicleName,
     nav,
     grid,
+    reviewList,
+    inv_id: data.inv_id,
     errors: null,
   });
 };

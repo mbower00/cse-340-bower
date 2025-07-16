@@ -27,6 +27,59 @@ Util.getNav = async function (req, res, next) {
 };
 
 /**
+ * Builds the list of reviews, or a notice to be the first.
+ */
+Util.buildReviewList = function (reviews, forAccount = false) {
+  let reviewList = "";
+  if (reviews.length > 0) {
+    reviewList += '<ul class="reviewList">';
+    reviews.forEach((review) => {
+      reviewList += "<li>";
+      reviewList += '<div class="reviewInfo">';
+      reviewList += "<strong>";
+      if (forAccount) {
+        reviewList += review.inv_year;
+        reviewList += " ";
+        reviewList += review.inv_make;
+        reviewList += " ";
+        reviewList += review.inv_model;
+      } else {
+        reviewList += review.account_firstname[0];
+        reviewList += review.account_lastname;
+      }
+      reviewList += "</strong> - ";
+      reviewList += new Date(review.review_date).toDateString();
+      if (forAccount) {
+        reviewList += ' - <a href="/inv/detail/';
+        reviewList += review.inv_id;
+        reviewList += '">View</a>';
+        reviewList += ' <a href="/review/update/';
+        reviewList += review.review_id;
+        reviewList += '">Edit</a> ';
+        reviewList += '<a href="/review/delete/';
+        reviewList += review.review_id;
+        reviewList += '">Delete</a>';
+      }
+      reviewList += "</div>";
+      reviewList += "<div>";
+      reviewList += review.review_text;
+      reviewList += "</div>";
+      reviewList += "</li>";
+    });
+    reviewList += "</ul>";
+  } else {
+    reviewList += '<p class="notice">';
+    if (forAccount) {
+      reviewList += "You do not have an reviews.";
+    } else {
+      reviewList += "Be the first to write a review.";
+    }
+    reviewList += "</p>";
+  }
+  return reviewList;
+};
+
+/**
  * Build the classification view HTML
  */
 Util.buildClassificationGrid = async function (data) {
@@ -173,7 +226,8 @@ Util.checkLogin = (req, res, next) => {
 };
 
 Util.createAccountClearanceMiddleware = (
-  allowedTypes = ["Employee", "Admin"]
+  allowedTypes = ["Employee", "Admin"],
+  warningText = "You are not authorized to reach that section of the site"
 ) => {
   return (req, res, next) => {
     let account_type = null;
@@ -184,10 +238,7 @@ Util.createAccountClearanceMiddleware = (
         process.env.ACCESS_TOKEN_SECRET,
         (error, accountData) => {
           if (error) {
-            req.flash(
-              "warning",
-              "You are not authorized to reach that section of the site"
-            );
+            req.flash("warning", warningText);
             return res.redirect("/account/login");
           }
           account_type = accountData.account_type;
@@ -200,10 +251,7 @@ Util.createAccountClearanceMiddleware = (
       }
     }
 
-    req.flash(
-      "warning",
-      "You are not authorized to reach that section of the site"
-    );
+    req.flash("warning", warningText);
     return res.redirect("/account/login");
   };
 };

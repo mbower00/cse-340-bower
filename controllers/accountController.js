@@ -3,15 +3,21 @@ require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const utilities = require("../utilities");
 const accountModel = require("../models/account-model");
+const reviewModel = require("../models/review-model");
 
 /**
  * Deliver the account view
  */
 async function buildAccount(req, res, next) {
   let nav = await utilities.getNav();
+  const reviews = await reviewModel.getReviewsByAccountId(
+    res.locals.accountData.account_id
+  );
+  const reviewList = await utilities.buildReviewList(reviews, true);
   res.render("account/account", {
     title: "Account",
     nav,
+    reviewList,
     errors: null,
   });
 }
@@ -183,6 +189,10 @@ async function buildAccountUpdate(req, res, next) {
  */
 async function updateAccount(req, res) {
   let nav = await utilities.getNav();
+  const reviews = await reviewModel.getReviewsByAccountId(
+    res.locals.accountData.account_id
+  );
+  const reviewList = await utilities.buildReviewList(reviews, true);
   const { account_id, account_firstname, account_lastname, account_email } =
     req.body;
 
@@ -206,6 +216,7 @@ async function updateAccount(req, res) {
       title: "Account",
       nav,
       errors: null,
+      reviewList,
     });
   } else {
     req.flash("error", "Sorry, the update failed.");
@@ -213,6 +224,7 @@ async function updateAccount(req, res) {
       title: "Account",
       nav,
       errors: null,
+      reviewList,
     });
   }
 }
@@ -222,6 +234,10 @@ async function updateAccount(req, res) {
  */
 async function updatePassword(req, res) {
   let nav = await utilities.getNav();
+  const reviews = await reviewModel.getReviewsByAccountId(
+    res.locals.accountData.account_id
+  );
+  const reviewList = await utilities.buildReviewList(reviews, true);
   const { account_id, account_password } = req.body;
 
   // Hash the password before storing
@@ -234,6 +250,7 @@ async function updatePassword(req, res) {
     res.status(500).render("account/account", {
       title: "Account",
       nav,
+      reviewList,
       errors: null,
     });
   }
@@ -255,6 +272,7 @@ async function updatePassword(req, res) {
     res.status(201).render("account/account", {
       title: "Account",
       nav,
+      reviewList,
       errors: null,
     });
   } else {
@@ -262,6 +280,7 @@ async function updatePassword(req, res) {
     res.status(501).render("account/account", {
       title: "Account",
       nav,
+      reviewList,
       errors: null,
     });
   }

@@ -1,0 +1,53 @@
+<h1><%= title %></h1>
+
+<%- messages() %>
+
+<% if (errors) { %>
+<ul class="error">
+  <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
+
+<div class="form-container">
+  <form action="/review/update" method="post" class="cse-motors-form">
+    <label for="review_vehicle">Vehicle*</label>
+    <input
+      name="review_vehicle"
+      id="review_vehicle"
+      type="text"
+      value="<%= locals.review_vehicle %>"
+      required
+      readonly
+    />
+
+    <label for="review_date">Date*</label>
+    <input
+      name="review_date"
+      id="review_date"
+      type="text"
+      value="<%= locals.review_date %>"
+      required
+      readonly
+    />
+
+    <label for="review_text">Review*</label>
+    <textarea
+      name="review_text"
+      id="review_text"
+      type="text"
+      required
+      rows="4"
+    ><%- locals.review_text %></textarea>
+    
+
+    <div class="required">*Required</div>
+
+    <button type="submit">UPDATE</button>
+
+    <input type="hidden" name="review_id"
+    <% if(locals.review_id) { %> value="<%= locals.review_id %>"
+    <% } %>>
+  </form>
+</div>

@@ -1,3 +1,59 @@
 <h1><%= title %></h1>
 
-<%- messages() %> <%- grid %>
+<%- messages() %> 
+
+<% if (errors) { %>
+<ul class="error">
+  <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
+
+<%- grid %>
+
+<h3>Reviews</h3>
+
+<%- reviewList %> <% if (locals.accountData) { %>
+
+<h3>Add Your Own Review</h3>
+
+<div class="form-container">
+  <form action="/review/add" method="post" class="cse-motors-form">
+    <label for="screen_name">Screen Name*</label>
+    <input
+      name="screen_name"
+      id="screen_name"
+      type="text"
+      value="<%= `${locals.accountData?.account_firstname[0]}${locals.accountData?.account_lastname}` %>"
+      required
+      readonly
+    />
+
+    <label for="review_text">Review*</label>
+    <textarea
+      name="review_text"
+      id="review_text"
+      type="text"
+      required
+      rows="4"
+    ><%- locals.review_text %></textarea>
+
+    <div class="required">*Required</div>
+
+    <button type="submit">POST</button>
+
+    <input type="hidden" name="inv_id"
+    <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+    <% } %>>
+    <input type="hidden" name="account_id"
+    <% if(locals.accountData?.account_id) { %> value="<%= locals.accountData?.account_id %>"
+    <% } %>>
+  </form>
+</div>
+
+<% } else { %>
+
+<p>You must <a href="/account/login">login</a> to write a review.</p>
+
+<% } %>
